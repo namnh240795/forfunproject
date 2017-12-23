@@ -8,6 +8,10 @@ const app = express();
 app.use(cors());
 app.use(bodyParser.json());
 
+app.get('/', () => {
+    return res.json({ message: 'Welcome to the world'});
+});
+
 app.post('/login', (req, res) => {
     const { body } = req;
     if(body.username !== 'admin')
@@ -25,7 +29,8 @@ app.get('/home', (req, res) => {
         return res.json({ error: 'Invalid token'});
     }
     if(limit && offset) {
-        const result = data.slice(offset, limit);
+        const result = data.slice(parseInt(offset), parseInt(offset)+parseInt(limit));
+        // console.log(result);
         return res.json( result );
     } else return res.json(data.slice(0, 5));
 });
